@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-
-
 word_bank = ["adult","aircraft","airforce","airport","album","alphabet","apple","backpack","balloon",
 "banana","barbecue","bathroom","bathtub","bible","bottle","brain","bridge","butterfly","button",
 "cappuccino","carpet","carrot", "chair","chess","chief","child","chisel","chocolate","church",
@@ -17,12 +14,3 @@ word_bank = ["adult","aircraft","airforce","airport","album","alphabet","apple",
 "tapestry","teeth","telescope","television","tennis","thermometer","tiger","toilet","tongue","torch",
 "torpedo","train","treadmill","triangle","tunnel","typewriter","umbrella","vacuum","vampire",
 "videotape","vulture","water","weapon","wheelchair","woman"]
-
-hangman = word_bank.sample.chomp
-while hangman =~ /\s\d\W/
-  hangman = word_bank.sample.chomp
-end
-
-puts "_" * hangman.length
-
-
