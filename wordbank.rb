@@ -14,3 +14,13 @@ word_bank = ["adult","aircraft","airforce","airport","album","alphabet","apple",
 "tapestry","teeth","telescope","television","tennis","thermometer","tiger","toilet","tongue","torch",
 "torpedo","train","treadmill","triangle","tunnel","typewriter","umbrella","vacuum","vampire",
 "videotape","vulture","water","weapon","wheelchair","woman"]
+
+#reevaluate
+
+ hangman = word_bank.sample
+if /[\s\d\W]/.match(hangman)
+  puts "yes"
+  hangman = word_bank.sample
+else /[a-z]/.match(hangman)
+    puts "_" * hangman.length
+end
