@@ -29,39 +29,42 @@ def ask_hangman question
   puts question
 end
 
-def used_guess chances, guess
-  chances = 8
-  guess.include?
-    chances -= 1
-  end
-
+letter_guesses = []
 chances = 8
 ask_hangman question_1
   response = gets.chomp
-until response = hangman || chances = 0
+
+
+until chances == 0 || response == hangman
   if response.length.to_i == 1
     print response
-    if hangman_letters.include?(response)
-      chances -= 1
-      slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
-      slot.each {|space| blank_array.slice!(space)}
-      print blank_array
-      slot.each{|space| blank_array.insert(space, response)}
-      blank = blank_array.join
-      ask_hangman question_1
-      print blank
-break
-    elsif !hangman_letters.include?(response)
-      print blank.to_s
-      break
-    end
-   if response.length.to_i > 1
-      print response
-      if response != hangman
+    if letter_guesses.include?(response)
+      puts "You already guessed that letter, try again"
+    else
+      letter_guesses.unshift(response)
+      if hangman_letters.include?(response)
+        slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
+        slot.each {|space| blank_array.slice!(space)}
+        print blank_array
+        slot.each{|space| blank_array.insert(space, response)}
+        blank = blank_array.join
+        ask_hangman question_1
+        print blank
+      elsif !hangman_letters.include?(response)
         chances -= 1
+        print blank.to_s
+      end
+    end
+    if response.length.to_i > 1
+    print response
+      if response = hangman
+        puts "Congratulations, you've guessed the word!"
+        break
+      else
+          puts "Sorry, the hidden word was"
+          p hangman
+          break
+      end
+    end
   end
-
-
-
-    print
 end

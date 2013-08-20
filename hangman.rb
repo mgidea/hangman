@@ -24,41 +24,85 @@ hangman_letters = hangman.split(//)
 blank = "_"*hangman.length
 blank_array = blank.split(//)
 
+# def ask_hangman question
+#   puts question
+#   return gets.chomp
+
+
+# end
+# ask_hangman "Guess a single letter (a-z) or the entire word: "
+# while guess != @hangman
+
+#   ask_hangman "Guess a single letter (a-z) or the entire word: "
+
+
+#   if hangman_letters.include?(response)
+#     slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
+#     slot.each {|space| blank_array.slice!(space)}
+#     p blank_array
+#     slot.each{|space| blank_array.insert(space, response)}
+#     blank = blank_array.join
+#     return blank
+#   end
+#   print blank.to_s if !hangman_letters.include?(response)
+
+# puts
+
+
+
+# print hangman
+hangman = word_bank.sample
+hangman_letters = hangman.split(//)
+
+blank = "_"*hangman.length
+blank_array = blank.split(//)
+
 question_1 = "Guess a single letter (a-z) or the entire word: "
+
 def ask_hangman question
-  puts question
+  print question
 end
 
-def letter_or_word(var)
-  if var.length == 1
-    return
-  else var.length != 1
-    return
-  end
-end
+letter_guesses = Array.new
+chances = 8
 ask_hangman question_1
-  response = gets.chomp
-  print response
-while response != hangman
-  letter_or_word(response)
-  if true
-    if hangman_letters.include?(response)
+response = gets.chomp
+until chances == 0
+  if response == hangman
+    puts "Congratulations, you've guessed the word!"
+    break
+  elsif response.length.to_i > 1
+    print "Sorry, the hidden word was"
+    p hangman
+    break
+  elsif chances == 0
+    puts "You're out of chances, better luck next time..."
+  elsif
+    letter_guesses.include?(response)
+         puts " You already guessed that letter, try again"
+         response = gets.chomp
+  elsif response.length.to_i == 1
+    if !hangman_letters.include?(response)
+      chances -= 1
+      print blank.to_s
+      letter_guesses.push(response)
+      response = gets.chomp
+    elsif hangman_letters.include?(response)
       slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
       slot.each {|space| blank_array.slice!(space)}
-      print blank_array
       slot.each{|space| blank_array.insert(space, response)}
       blank = blank_array.join
-      return blank
-      #ask_hangman question_1
-    elsif !hangman_letters.include?(response)
-      print blank.to_s
+      puts blank
+      if blank == hangman
+        puts "Congratulations, you've guessed the word!"
+      break
+      end
+      ask_hangman question_1
+      response = gets.chomp
     end
   end
-
-
-
-    print
 end
+
 
 
 
