@@ -29,38 +29,39 @@ def ask_hangman question
   puts question
 end
 
-def letter_or_word(var)
-  if var.length == 1
-    return
-  else var.length != 1
-    return
+def used_guess chances, guess
+  chances = 8
+  guess.include?
+    chances -= 1
   end
-end
+
+chances = 8
 ask_hangman question_1
   response = gets.chomp
-  print response
-while response != hangman
-  letter_or_word(response)
-  if true
+until response = hangman || chances = 0
+  if response.length.to_i == 1
+    print response
     if hangman_letters.include?(response)
+      chances -= 1
       slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
       slot.each {|space| blank_array.slice!(space)}
       print blank_array
       slot.each{|space| blank_array.insert(space, response)}
       blank = blank_array.join
-      return blank
-      #ask_hangman question_1
+      ask_hangman question_1
+      print blank
+break
     elsif !hangman_letters.include?(response)
       print blank.to_s
+      break
     end
+   if response.length.to_i > 1
+      print response
+      if response != hangman
+        chances -= 1
   end
 
 
 
     print
 end
-
-
-
-
-
