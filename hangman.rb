@@ -90,9 +90,11 @@ until chances == 0
     elsif hangman_letters.include?(response)
       slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
       slot.each {|space| blank_array.slice!(space)}
+      slot.size = occurances
       slot.each{|space| blank_array.insert(space, response)}
       blank = blank_array.join
       puts blank
+      puts "Found " + occurances.to_s + "of the character" + response
       if blank == hangman
         puts "Congratulations, you've guessed the word!"
       break
