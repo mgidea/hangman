@@ -49,6 +49,10 @@ puts "Chances remaining: #{chances}"
 puts
 ask_hangman question_1
 response = gets.chomp
+while response.empty?
+  puts "no stalling, you must guess a letter or word."
+    response = gets.chomp
+end
 puts
 until chances == 0
   if response == hangman
@@ -70,6 +74,10 @@ until chances == 0
     if /[\W\s\d]/.match(response)
       puts "no stalling, you must guess a letter or word."
       response = gets.chomp
+      while response.empty?
+        puts "no stalling, you must guess a letter or word."
+          response = gets.chomp
+       end
     elsif !hangman_letters.include?(response)
       chances -= 1
       letter_guesses.push(response)
@@ -88,6 +96,10 @@ until chances == 0
         puts "Chances remaining: #{chances}"
         puts
         response = gets.chomp
+        while response.empty?
+          puts "no stalling, you must guess a letter or word."
+            response = gets.chomp
+        end
       end
     elsif hangman_letters.include?(response)
       letter_guesses.push(response)
@@ -108,6 +120,10 @@ until chances == 0
       puts "Chances remaining: #{chances}"
       puts
       response = gets.chomp
+      while response.empty?
+        puts "no stalling, you must guess a letter or word."
+          response = gets.chomp
+      end
     end
   end
 end
