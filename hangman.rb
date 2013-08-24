@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-#word_bank=["rt4.","tree","   t","4444","     "]
-#word_bank = ["harry"]
+require 'pry'
+
 word_bank = ["adult","aircraft","airforce","airport","album","alphabet","apple","backpack","balloon",
 "banana","barbecue","bathroom","bathtub","bible","bottle","brain","bridge","butterfly","button",
 "cappuccino","carpet","carrot", "chair","chess","chief","child","chisel","chocolate","church",
@@ -18,8 +18,8 @@ word_bank = ["adult","aircraft","airforce","airport","album","alphabet","apple",
 "torpedo","train","treadmill","triangle","tunnel","typewriter","umbrella","vacuum","vampire",
 "videotape","vulture","water","weapon","wheelchair","woman"]
 
-#hangman = word_bank.sample
-hangman = "tennis"
+hangman = word_bank.sample
+
 if /[\W\s\d]/.match(hangman)
   hangman = word_bank.sample
 end
@@ -49,17 +49,21 @@ puts "Chances remaining: #{chances}"
 puts
 ask_hangman question_1
 response = gets.chomp
-while response.empty?
-  puts "no stalling, you must guess a letter or word."
-    response = gets.chomp
-end
-puts
 until chances == 0
-  if response == hangman
+  if response.empty?
+    chances -= 1
+    puts "You hit return - stop stalling"
+    puts "Word: #{blank}"
+    puts
+    puts "Chances remaining: #{chances}"
+    ask_hangman question_1
+    response = gets.chomp
+  elsif response == hangman
     puts "Congratulations, you've guessed the word!"
     break
   elsif response.length.to_i > 1
-    print "Sorry, the hidden word was"
+    puts "the word you guessed: '"+ response +"' was incorrect"
+    print "Sorry, the hidden word was "
     p hangman
     break
   elsif
@@ -69,15 +73,13 @@ until chances == 0
     puts "Word: #{blank}"
     puts
     puts "Chances remaining: #{chances}"
+    ask_hangman question_1
     response = gets.chomp
   elsif response.length.to_i == 1
     if /[\W\s\d]/.match(response)
       puts "no stalling, you must guess a letter or word."
+      ask_hangman question_1
       response = gets.chomp
-      while response.empty?
-        puts "no stalling, you must guess a letter or word."
-          response = gets.chomp
-       end
     elsif !hangman_letters.include?(response)
       chances -= 1
       letter_guesses.push(response)
@@ -94,40 +96,29 @@ until chances == 0
         puts "Word: #{blank}"
         puts
         puts "Chances remaining: #{chances}"
-        puts
+        ask_hangman question_1
         response = gets.chomp
-        while response.empty?
-          puts "no stalling, you must guess a letter or word."
-            response = gets.chomp
-        end
       end
     elsif hangman_letters.include?(response)
       letter_guesses.push(response)
       slot = hangman_letters.each_index.select{|i| hangman_letters[i] == response}
-      slot.each {|space| blank_array.slice!(space)}
-      slot.each{|space| blank_array.insert(space, response)}
+      slot.each{|space| blank_array[space] = response}
       blank = blank_array.join
       occurances = blank_array.select {|i| i == response}
-      puts "Found " + occurances.size.to_s + " occurance(s) of the character " + response
-      puts
-
+      puts "Found " + occurances.size.to_s + " occurance(s) of the character " + response + "/n"
       if blank == hangman
         puts "Congratulations, you've guessed the word!"
-      break
+        break
       end
       puts "Word: #{blank}"
       puts
       puts "Chances remaining: #{chances}"
       puts
+      ask_hangman question_1
       response = gets.chomp
-      while response.empty?
-        puts "no stalling, you must guess a letter or word."
-          response = gets.chomp
-      end
     end
   end
 end
-
 
 
 
